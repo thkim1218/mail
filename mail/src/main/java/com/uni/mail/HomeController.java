@@ -112,6 +112,8 @@ public class HomeController {
 	
 	
 	public List<String> fileList = new ArrayList<String>();
+	public List<String> contentList = new ArrayList<String>();
+	public String str101  = new String();
 	
 	
 	//파일 읽기
@@ -175,68 +177,41 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="fileopen")
-	public String fileopen(HttpServletRequest request, Model model) {
+	public String fileopen(HttpServletRequest request, Model model) throws IOException, SolrServerException{
+		SolrClient client = new HttpSolrClient.Builder("http://10.244.0.28:8983/solr/gettingstarted").build();
+		
+		
 		model.addAttribute("result",(Integer.parseInt(request.getParameter("cnt")))+1);
 		model.addAttribute("file",fileList.get((Integer.parseInt(request.getParameter("cnt")))));
 		String str = new String();
-		str = fileRead(Integer.parseInt(request.getParameter("cnt")));
-		model.addAttribute("show",str);
+		//클라우드
+		str = str + contentList.get((Integer.parseInt(request.getParameter("cnt"))));
+		str = str.replace("\n","<br>");
 		
-		/*
-		try{
-			
-            //파일 객체 생성
-			File readfile = new File(fileList.get((Integer.parseInt(request.getParameter("cnt")))));
-            //입력 스트림 생성
-			BufferedReader file_reader = null;
-			
-			//jsoup 사용하여 charset 분류
-			org.jsoup.nodes.Document doc = Jsoup.parse(new File(fileList.get((Integer.parseInt(request.getParameter("cnt"))))),"UTF-8");
-			Elements meta2 = doc.getElementsByTag("meta");
-			String charset = meta2.toString();
-			STRINGTEST = charset.contains("ks_c_5601-1987");
-			if(STRINGTEST) {
-				//ks_c_5601-1987
-				file_reader = new BufferedReader(new InputStreamReader(new FileInputStream(readfile), "euc-kr"));
-			}else {
-				file_reader = new BufferedReader(new InputStreamReader(new FileInputStream(readfile), "UTF8"));
-			}
-			
-			String line = "";
-			while((line = file_reader.readLine()) != null){
-                str += line;
-            }
-			
-			
-			//FW 메일 sent 혹은 날짜 빼내기
-			
-			String sent = new String();
-			if(str.contains("Sent")){
-				String target = "Sent";
-				int target_num = str.indexOf(target);
-				sent = str.substring(target_num+10,(str.substring(target_num).indexOf("To")+target_num)-7);
-				System.out.println(sent);
-			}
-			else if(str.contains("보낸 날짜")) {
-				String target = "Sent";
-				int target_num = str.indexOf(target);
-				//sent = str.substring(target_num,30+target_num);
-				System.out.println(target_num);
-			}
-			
-			
-			//File file = new File(fileList.get((Integer.parseInt(request.getParameter("cnt")))));
-            
-            model.addAttribute("show",str);
-            file_reader.close();
-	        }catch (FileNotFoundException e) {
-	            // TODO: handle exception
-	        }catch(IOException e){
-	            System.out.println(e);
-	        }
-	        */
-	
+		//윈도우
+		//str = str.replace("&nbsp"," ");
+		//str = fileRead(Integer.parseInt(request.getParameter("cnt")));
+		
+		
+		//내용출력변경
+/*		SolrQuery queryDate = new SolrQuery();
+		queryDate.setQuery(fileList.get((Integer.parseInt(request.getParameter("cnt")))));
+		queryDate.setRows(50000);
+		queryDate.addField("content");
+		QueryResponse responseD = client.query(queryDate);
+		SolrDocumentList resultsD = responseD.getResults();
+		for(int i=0;i<resultsD.size(); ++i) {
+			str = str + resultsD.get(i);
+		}
+		*/
+		
+		model.addAttribute("show",str);
+
+		//model.addAttribute("show",contentList.get((Integer.parseInt(request.getParameter("cnt")))));
 		return "fileopen";
+		
+	
+		
 	}
 	
 	
@@ -246,7 +221,7 @@ public class HomeController {
 		List<String> fileDate = new ArrayList<String>();
 	
 		String keyword = request.getParameter("keyword");
-		SolrClient client = new HttpSolrClient.Builder("http://localhost:8983/solr/gettingstarted").build();
+		SolrClient client = new HttpSolrClient.Builder("http://10.244.0.28:8983/solr/gettingstarted").build();
 		SolrQuery query = new SolrQuery();	
 		
 		
@@ -280,17 +255,14 @@ public class HomeController {
 			for(int i=0;i<results.size(); ++i) {
 				String str = new String();
 				str = str+results.get(i);
-				String target = "D:";
+				String target = "/opt";
 				int target_num = str.indexOf(target);
 				String result;
 				result = str.substring(target_num,(str.substring(target_num).indexOf("}")+target_num));
 				fileList.add(result);
 				
-				
-				
-				
-				String str2  = new String();
-				str2 = str2 + resultsD.get(i);
+				str101 = "";
+				str101 = str101 + resultsD.get(i);
 				
 				String sent = new String();
 				/*if(str2.contains("Sent")){
@@ -303,8 +275,10 @@ public class HomeController {
 				}
 				else
 					sent="-";*/
-				sent = fileDate(str2);
+				sent = fileDate(str101);
 				fileDate.add(sent);
+				contentList.add(str101);
+				
 			}
 			model.addAttribute("ORresult",output);
 			model.addAttribute("fileList",fileList);
