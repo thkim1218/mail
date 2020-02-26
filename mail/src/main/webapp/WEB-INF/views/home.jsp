@@ -14,6 +14,7 @@
 
 <body>
 <P>  The time on the server is ${serverTime}. </P>
+<P> 2020/02/26 0629 </P>
 
 <form name="form1" method="post" action="file.do">
 	<input name="keyword" value="${map.keyword}" style="width:900px">

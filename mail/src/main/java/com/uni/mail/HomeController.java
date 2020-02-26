@@ -285,7 +285,7 @@ public class HomeController {
 			model.addAttribute("list2",fileDate); 
 			return "/file";}
 		else
-			model.addAttribute("ORresult","2글자 이상 입력하시오");
+			model.addAttribute("ORresult","2글자 이상 입력하시오!");
 			return "/file";
 		}
 	
