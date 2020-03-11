@@ -221,7 +221,7 @@ public class HomeController {
 		List<String> fileDate = new ArrayList<String>();
 	
 		String keyword = request.getParameter("keyword");
-		SolrClient client = new HttpSolrClient.Builder("http://10.244.0.28:8983/solr/gettingstarted").build();
+		SolrClient client = new HttpSolrClient.Builder("http://10.244.0.44:8983/solr/gettingstarted").build();
 		SolrQuery query = new SolrQuery();	
 		
 		
