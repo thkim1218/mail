@@ -178,7 +178,7 @@ public class HomeController {
 	
 	@RequestMapping(value="fileopen")
 	public String fileopen(HttpServletRequest request, Model model) throws IOException, SolrServerException{
-		SolrClient client = new HttpSolrClient.Builder("http://10.244.0.28:8983/solr/gettingstarted").build();
+		SolrClient client = new HttpSolrClient.Builder("http://10.244.0.44:8983/solr/gettingstarted").build();
 		
 		
 		model.addAttribute("result",(Integer.parseInt(request.getParameter("cnt")))+1);
