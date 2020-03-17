@@ -185,12 +185,12 @@ public class HomeController {
 		model.addAttribute("file",fileList.get((Integer.parseInt(request.getParameter("cnt")))));
 		String str = new String();
 		//클라우드
-		//str = str + contentList.get((Integer.parseInt(request.getParameter("cnt"))));
-		//str = str.replace("\n","<br>");
+		str = str + contentList.get((Integer.parseInt(request.getParameter("cnt"))));
+		str = str.replace("\n","<br>");
 		
 		//윈도우
-		str = str.replace("&nbsp"," ");
-		str = fileRead(Integer.parseInt(request.getParameter("cnt")));
+		//str = str.replace("&nbsp"," ");
+		//str = fileRead(Integer.parseInt(request.getParameter("cnt")));
 		
 		
 		//내용출력변경
