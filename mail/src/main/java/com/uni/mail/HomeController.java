@@ -178,19 +178,19 @@ public class HomeController {
 	
 	@RequestMapping(value="fileopen")
 	public String fileopen(HttpServletRequest request, Model model) throws IOException, SolrServerException{
-		SolrClient client = new HttpSolrClient.Builder("http://10.244.0.44:8983/solr/gettingstarted").build();
+		SolrClient client = new HttpSolrClient.Builder("http://192.168.1.239:8983/solr/gettingstarted").build();
 		
 		
 		model.addAttribute("result",(Integer.parseInt(request.getParameter("cnt")))+1);
 		model.addAttribute("file",fileList.get((Integer.parseInt(request.getParameter("cnt")))));
 		String str = new String();
 		//클라우드
-		str = str + contentList.get((Integer.parseInt(request.getParameter("cnt"))));
-		str = str.replace("\n","<br>");
+		//str = str + contentList.get((Integer.parseInt(request.getParameter("cnt"))));
+		//str = str.replace("\n","<br>");
 		
 		//윈도우
-		//str = str.replace("&nbsp"," ");
-		//str = fileRead(Integer.parseInt(request.getParameter("cnt")));
+		str = str.replace("&nbsp"," ");
+		str = fileRead(Integer.parseInt(request.getParameter("cnt")));
 		
 		
 		//내용출력변경
@@ -221,7 +221,7 @@ public class HomeController {
 		List<String> fileDate = new ArrayList<String>();
 	
 		String keyword = request.getParameter("keyword");
-		SolrClient client = new HttpSolrClient.Builder("http://10.244.0.44:8983/solr/gettingstarted").build();
+		SolrClient client = new HttpSolrClient.Builder("http://192.168.1.239:8983/solr/gettingstarted").build();
 		SolrQuery query = new SolrQuery();	
 		
 		
@@ -255,7 +255,7 @@ public class HomeController {
 			for(int i=0;i<results.size(); ++i) {
 				String str = new String();
 				str = str+results.get(i);
-				String target = "/opt";
+				String target = "C:";
 				int target_num = str.indexOf(target);
 				String result;
 				result = str.substring(target_num,(str.substring(target_num).indexOf("}")+target_num));
