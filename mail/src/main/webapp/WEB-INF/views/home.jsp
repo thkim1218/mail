@@ -9,7 +9,7 @@
 	<title>Home</title>
 	<style>
 		table, th, td {border: 1px solid black; border-collapse: collapse;}
-	</style>
+	</style> 
 </head>
 
 <body>
