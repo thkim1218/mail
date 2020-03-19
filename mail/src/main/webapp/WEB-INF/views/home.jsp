@@ -14,7 +14,7 @@
 
 <body>
 <!-- <P>  The time on the server is ${serverTime}. </P>  -->
-<P> Search Mail (v1.2) </P>
+<P> Search Mail (v1.2)</P>
 
 <form name="form1" method="post" action="file.do">
 	<input name="keyword" value="${map.keyword}" style="width:900px">

@@ -255,7 +255,7 @@ public class HomeController {
 			for(int i=0;i<results.size(); ++i) {
 				String str = new String();
 				str = str+results.get(i);
-				String target = "/opt"; 
+				String target = "/opt";
 				int target_num = str.indexOf(target);
 				String result;
 				result = str.substring(target_num,(str.substring(target_num).indexOf("}")+target_num));
