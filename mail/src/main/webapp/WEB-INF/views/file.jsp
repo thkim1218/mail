@@ -31,8 +31,10 @@
 					<td align="center">${status.count }</td>
 					<td align="center">${fileL }</td>
 					<td align="center">${list2[status.index] }</td>
-					<td align="center">						
-						<a href="/mail/fileopen.do?cnt=${status.index }">파일열기</a>
+					<td align="center">
+						<a>파일열기</a>
+						<!--				
+						<a href="/mail/fileopen.do?cnt=${status.index }">파일열기</a> -->
 					</td>
 				</tr>
 			</c:forEach>	
